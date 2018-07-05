@@ -6,8 +6,10 @@ import sys
 import logging
 from conans.client import conan_api
 from conans.model.ref import ConanFileReference
-from bincrafters_remove_outdated import __version__ as version
 
+__author__ = u"Uilian Ries"
+__license__ = "MIT"
+__version__ = '0.1.0'
 
 LOGGING_FORMAT = '[%(levelname)s]\t%(asctime)s %(message)s'
 logging.basicConfig(format=LOGGING_FORMAT, datefmt='%Y-%m-%d %H:%M:%S')
@@ -37,7 +39,7 @@ class Command(object):
         parser = argparse.ArgumentParser(description="Conan Remove Outdated")
         parser.add_argument('remote', type=str, help='Conan remote to be cleaned')
         parser.add_argument('--yes', '-y', action='store_true', help='Do not ask for confirmation')
-        parser.add_argument('--version', '-v', action='version', version='%(prog)s {}'.format(version))
+        parser.add_argument('--version', '-v', action='version', version='%(prog)s {}'.format(__version__))
         args = parser.parse_args(*args)
         return args
 
