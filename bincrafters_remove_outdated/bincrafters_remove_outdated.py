@@ -3,16 +3,14 @@
 
 import argparse
 import sys
-import logging
+import colorama
+import termcolor
 from conans.client import conan_api
 from conans.model.ref import ConanFileReference
 
-__author__ = u"Uilian Ries"
+__author__  = "Uilian Ries"
 __license__ = "MIT"
-__version__ = '0.1.0'
-
-LOGGING_FORMAT = '[%(levelname)s]\t%(asctime)s %(message)s'
-logging.basicConfig(format=LOGGING_FORMAT, datefmt='%Y-%m-%d %H:%M:%S')
+__version__ = '0.2.0'
 
 
 class Command(object):
@@ -22,9 +20,8 @@ class Command(object):
     def __init__(self):
         """ Fill regex compiler
         """
-        self._logger = logging.getLogger(__file__)
-        self._logger.setLevel(logging.DEBUG)
         self._conan_instance, _, _ = conan_api.Conan.factory()
+        colorama.init()
 
     def set_conan_instance(self, conan_instance):
         """Setter for conan instance API
@@ -37,7 +34,7 @@ class Command(object):
         :param args: User arguments
         """
         parser = argparse.ArgumentParser(description="Conan Remove Outdated")
-        parser.add_argument('remote', type=str, help='Conan remote to be cleaned')
+        parser.add_argument('remote', type=str, help='Conan remote to be cleaned e.g conan-center')
         parser.add_argument('--yes', '-y', action='store_true', help='Do not ask for confirmation')
         parser.add_argument('--version', '-v', action='version', version='%(prog)s {}'.format(__version__))
         args = parser.parse_args(*args)
@@ -60,10 +57,15 @@ class Command(object):
         :param remote: Conan remote name
         :param skip_input: Do not ask for confirmation
         """
+        if skip_input:
+            print(termcolor.colored("WARNING: Using --skip_input option. Conan won't ask before to remove!", "yellow"))
+        print(termcolor.colored("Fetching recipes from {}".format(remote), "blue"))
         recipes = self._get_recipes_from_remote(remote)
         for recipe in recipes:
+            print(termcolor.colored("{}: Searching for outdated packages".format(recipe), "blue"))
             if self._are_there_outdated_packages(remote, recipe):
-                self._conan_instance.remove(recipe, outdated=True, force=skip_input)
+                print(termcolor.colored("{}: Found outdated packages. Removing ...".format(recipe), "blue"))
+                self._conan_instance.remove(recipe, remote=remote, outdated=True, force=skip_input)
 
     def _get_recipes_from_remote(self, remote):
         """List all recipes on remote server
@@ -76,7 +78,11 @@ class Command(object):
             raise Exception("Could not retrieve recipes from remote: {}".format(result.get('results')))
 
         recipes = [recipe['recipe']['id'] for recipe in result['results'][0]['items']]
-        self._logger.debug("RECIPES: {}".format(recipes))
+
+        print(termcolor.colored("Found {} recipes on remote {}:".format(len(recipes), remote), "blue"))
+        for recipe in recipes:
+            print(recipe)
+
         return recipes
 
     def _are_there_outdated_packages(self, remote, recipe):
@@ -84,7 +90,11 @@ class Command(object):
         result = self._conan_instance.search_packages(reference, remote=remote, outdated=True)
         if result.get('error'):
             raise Exception("Could not obtain remote package info")
-        return result['results'][0]['items'][0]['packages']
+        packages = result['results'][0]['items'][0]['packages']
+        for package in packages:
+            if package.get('outdated'):
+                print(termcolor.colored("{}: Package id {} is outdated".format(recipe, package.get('id'))))
+        return packages
 
 
 def main(args):
@@ -96,5 +106,5 @@ def main(args):
         command = Command()
         command.run(args)
     except Exception as error:
-        logging.error("ERROR: {}".format(error))
+        print(termcolor.colored("ERROR: {}".format(error), 'red'))
         sys.exit(1)
