@@ -12,6 +12,6 @@ fi
 
 python setup.py sdist
 pushd tests
-pytest -v -s --cov=bincrafters_remove_outdated
+pytest -v -s --cov=bincrafters_remove_outdated.bincrafters_remove_outdated
 mv .coverage ..
 popd
