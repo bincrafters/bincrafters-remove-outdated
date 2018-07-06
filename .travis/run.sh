@@ -10,8 +10,17 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
     pyenv activate conan
 fi
 
-python setup.py sdist
-pushd tests
-pytest -v -s --cov=bincrafters_remove_outdated.bincrafters_remove_outdated
-mv .coverage ..
-popd
+if [[ "${TRAVIS_EVENT_TYPE}" != "cron" ]]; then
+    python setup.py sdist
+    pushd tests
+    pytest -v -s --cov=bincrafters_remove_outdated.bincrafters_remove_outdated
+    mv .coverage ..
+    popd
+
+else
+
+    python setup.py install
+    conan remote add bincrafters ${REMOTE}
+    conan user -r bincrafters -p ${PASSWORD} ${LOGIN_USERNAME}
+    bincrafters-remove-outdated bincrafters --ignore --yes
+fi
