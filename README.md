@@ -10,8 +10,8 @@
 ![logo](logo.png)
 
 #### Requirements
-  * Python 3
-  * the Conan client
+  * Python 2.7 or 3
+  * the [Conan](https://conan.io) client
 
 #### INSTALL
 To install by pip is just one step
@@ -27,7 +27,8 @@ Or if you want to download our pip package
     pip install bincrafters_remove_outdated
 
 #### RUN
-Make sure your Conan client is logged in (`conan user`) the repository you want to clean. Then execute:
+- Make sure your remote is properly listed on Conan remote list (`conan remote list`)
+- Make sure your Conan client is logged in (`conan user`) the repository you want to clean. Then:
 
     $ bincrafters-remove-outdated <repository>
 
