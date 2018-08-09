@@ -9,6 +9,9 @@
 
 ![logo](logo.png)
 
+#### Requirements
+  * Python 3
+
 #### INSTALL
 To install by pip is just one step
 
