@@ -38,6 +38,7 @@ class Command(object):
         parser.add_argument('remote', type=str, help='Conan remote to be cleaned e.g conan-center')
         parser.add_argument('--yes', '-y', action='store_true', help='Do not ask for confirmation')
         parser.add_argument('--ignore', '-i', action='store_true', help='Ignore errors receive from remote')
+        parser.add_argument('--dry-run', '-d', action='store_true', help='Check which packages will be removed only')
         parser.add_argument('--version', '-v', action='version', version='%(prog)s {}'.format(__version__))
         args = parser.parse_args(*args)
         return args
@@ -75,7 +76,8 @@ class Command(object):
             if self._are_there_outdated_packages(remote, recipe):
                 print(termcolor.colored("{}: Found outdated packages. Removing ...".format(recipe), "blue"))
                 try:
-                    self._conan_instance.remove(recipe, remote=remote, outdated=True, force=skip_input)
+                    if not self._arguments.dry_run:
+                        self._conan_instance.remove(recipe, remote=remote, outdated=True, force=skip_input)
                 except Exception as error:
                     self._notify_error(error)
 

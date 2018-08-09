@@ -27,6 +27,7 @@ Or if you want to download our pip package
     pip install bincrafters_remove_outdated
 
 #### RUN
+
 - Make sure your remote is properly listed on Conan remote list (`conan remote list`)
 - Make sure your Conan client is logged in (`conan user`) the repository you want to clean. Then:
 
@@ -36,6 +37,23 @@ To remove **ALL** outdated packages on Bincrafters https://api.bintray.com/conan
 
     $ bincrafters-remove-outdated bincrafters
 
+#### USAGE
+
+```
+bincrafters-remove-outdated [-h] [--yes] [--ignore] [--dry-run] [--version] remote
+
+Conan Remove Outdated
+
+positional arguments:
+  remote         Conan remote to be cleaned e.g conan-center
+
+optional arguments:
+  -h, --help     show this help message and exit
+  --yes, -y      Do not ask for confirmation
+  --ignore, -i   Ignore errors receive from remote
+  --dry-run, -d  Check which packages will be removed only
+  --version, -v  show program's version number and exit
+```
 
 ##### Testing and Development
 To install extra packages required to test

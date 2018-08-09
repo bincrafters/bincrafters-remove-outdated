@@ -34,7 +34,7 @@ class MyPkg(ConanFile):
 class MyPkg(ConanFile):
     name = "Hello"
     version = "0.1.0"
-    options = {"shared": [True, False]} 
+    options = {"shared": [True, False]}
     default_options = "shared=True"
     exports_sources = "*"
     def package(self):
@@ -51,3 +51,24 @@ def test_remove_outdate_package(client):
     command = bincrafters_remove_outdated.Command()
     command.set_conan_instance(conan_instance)
     command.run(['testing'])
+
+
+def test_remove_outdate_package_with_yes(client):
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    command = bincrafters_remove_outdated.Command()
+    command.set_conan_instance(conan_instance)
+    command.run(['--yes', 'testing'])
+
+
+def test_remove_outdate_package_with_ignore(client):
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    command = bincrafters_remove_outdated.Command()
+    command.set_conan_instance(conan_instance)
+    command.run(['--ignore', 'testing'])
+
+
+def test_dry_run_outdate_package(client):
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    command = bincrafters_remove_outdated.Command()
+    command.set_conan_instance(conan_instance)
+    command.run(['--dry-run', 'testing'])
