@@ -6,6 +6,7 @@ matrix:
     language: python
     python: '3.6'
     if: type != cron
+    env: DEPLOY="true"
   - os: osx
     language: generic
     osx_image: xcode9
@@ -32,11 +33,11 @@ deploy:
     password: ${PYPI_PASSWORD}
     on:
       tags: true
-      condition: "$TRAVIS_PYTHON_VERSION = '3.6'"
+      condition: "$DEPLOY = 'true'"
   - provider: pypi
     user: ${TEST_PYPI_USERNAME}
     server: https://test.pypi.org/legacy/
     password: ${TEST_PYPI_PASSWORD}
     on:
       branch: master
-      condition: "$TRAVIS_PYTHON_VERSION = '3.6'"
+      condition: "$DEPLOY = 'true'"
