@@ -39,6 +39,7 @@ class Command(object):
         parser.add_argument('--yes', '-y', action='store_true', help='Do not ask for confirmation')
         parser.add_argument('--ignore', '-i', action='store_true', help='Ignore errors receive from remote')
         parser.add_argument('--dry-run', '-d', action='store_true', help='Check which packages will be removed only')
+        parser.add_argument('--pattern', '-p', default='*', help='Pattern to filter package name to be removed. e.g Boost/*')
         parser.add_argument('--version', '-v', action='version', version='%(prog)s {}'.format(__version__))
         args = parser.parse_args(*args)
         return args
@@ -87,9 +88,12 @@ class Command(object):
         :param remote: Conan remote name
         :return: list of recipes
         """
-        result = self._conan_instance.search_recipes("*", remote=remote)
+        result = self._conan_instance.search_recipes(self._arguments.pattern, remote=remote)
         if result.get('error'):
             self._notify_error("Could not retrieve recipes from remote: {}".format(result.get('results')))
+
+        if not result['results']:
+            self._notify_error("Could not retrieve recipes with pattern: {}".format(self._arguments.pattern))
 
         recipes = [recipe['recipe']['id'] for recipe in result['results'][0]['items']]
 

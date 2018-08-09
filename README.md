@@ -40,7 +40,7 @@ To remove **ALL** outdated packages on Bincrafters https://api.bintray.com/conan
 #### USAGE
 
 ```
-bincrafters-remove-outdated [-h] [--yes] [--ignore] [--dry-run] [--version] remote
+bincrafters-remove-outdated [-h] [--yes] [--ignore] [--dry-run] [--pattern PATTERN] [--version] remote
 
 Conan Remove Outdated
 
@@ -52,6 +52,7 @@ optional arguments:
   --yes, -y      Do not ask for confirmation
   --ignore, -i   Ignore errors receive from remote
   --dry-run, -d  Check which packages will be removed only
+  --pattern PATTERN, -p PATTERN Pattern to filter package name to be removed. e.g Boost/*
   --version, -v  show program's version number and exit
 ```
 
