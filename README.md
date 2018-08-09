@@ -11,6 +11,7 @@
 
 #### Requirements
   * Python 3
+  * the Conan client
 
 #### INSTALL
 To install by pip is just one step
@@ -26,6 +27,10 @@ Or if you want to download our pip package
     pip install bincrafters_remove_outdated
 
 #### RUN
+Make sure your Conan client is logged in (`conan user`) the repository you want to clean. Then execute:
+
+    $ bincrafters-remove-outdated <repository>
+
 To remove **ALL** outdated packages on Bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
     $ bincrafters-remove-outdated bincrafters
@@ -55,9 +60,9 @@ To develop or run conan remove outdated
 There are two ways to upload this project.
 
 ##### Travis CI
-After to create a new tag, the package will be uploaded automatically to Pypi.  
+After to create a new tag, the package will be uploaded automatically to PyPi.  
 Both username and password (encrypted) are in travis file.  
-Only one job (python 2.7) will upload, the second one will be skipped.
+Only one job (Python 3.6) will upload, the others will be skipped.
 
 
 ##### Command line
