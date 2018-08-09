@@ -4,11 +4,6 @@ matrix:
   - os: linux
     sudo: false
     language: python
-    python: '2.7'
-    if: type != cron
-  - os: linux
-    sudo: false
-    language: python
     python: '3.6'
     if: type != cron
   - os: osx
@@ -37,11 +32,11 @@ deploy:
     password: ${PYPI_PASSWORD}
     on:
       tags: true
-      condition: "$TRAVIS_PYTHON_VERSION = '2.7'"
+      condition: "$TRAVIS_PYTHON_VERSION = '3.6'"
   - provider: pypi
     user: ${TEST_PYPI_USERNAME}
     server: https://test.pypi.org/legacy/
     password: ${TEST_PYPI_PASSWORD}
     on:
       branch: master
-      condition: "$TRAVIS_PYTHON_VERSION = '2.7'"
+      condition: "$TRAVIS_PYTHON_VERSION = '3.6'"
