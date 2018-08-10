@@ -2,12 +2,16 @@ build: false
 
 
 environment:
-    PYTHON: "C:\\Python27"
-    PYTHON_VERSION: "2.7.8"
     PYTHON_ARCH: "32"
 
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+          PYTHON: "C:\\Python27"
+          PYTHON_VERSION: "2.7.8"
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+          PYTHON: "C:\\Python37"
+          PYTHON_VERSION: "3.7.0"
+
 
 install:
   - set PATH=%PATH%;%PYTHON%/Scripts/
@@ -16,3 +20,6 @@ install:
 test_script:
 - cd tests
 - pytest -v --cov=bincrafters_remove_outdated
+- cd ..
+- python setup.py install
+- bincrafters_remove_outdated --version
