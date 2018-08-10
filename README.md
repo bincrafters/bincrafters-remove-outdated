@@ -40,21 +40,48 @@ To remove **ALL** outdated packages on Bincrafters https://api.bintray.com/conan
 #### USAGE
 
 ```
-bincrafters-remove-outdated [-h] [--yes] [--ignore] [--dry-run] [--pattern PATTERN] [--version] remote
+bincrafters-remove-outdated [-h] [--yes] [--ignore] [--dry-run] [--pattern PATTERN | --package-list-file PACKAGE_LIST_FILE] [--version] remote
 
 Conan Remove Outdated
 
 positional arguments:
-  remote         Conan remote to be cleaned e.g conan-center
+  remote                Conan remote to be cleaned e.g conan-center
 
 optional arguments:
-  -h, --help     show this help message and exit
-  --yes, -y      Do not ask for confirmation
-  --ignore, -i   Ignore errors receive from remote
-  --dry-run, -d  Check which packages will be removed only
-  --pattern PATTERN, -p PATTERN Pattern to filter package name to be removed. e.g Boost/*
-  --version, -v  show program's version number and exit
+  -h, --help            show this help message and exit
+  --yes, -y             Do not ask for confirmation
+  --ignore, -i          Ignore errors receive from remote
+  --dry-run, -d         Check which packages will be removed only
+  --pattern PATTERN, -p PATTERN
+                        Pattern to filter package name to be removed. e.g
+                        Boost/*
+  --package-list-file PACKAGE_LIST_FILE, -plf PACKAGE_LIST_FILE
+                        Package list file path
+  --version, -v         show program's version number and exit
 ```
+
+##### FILTER
+If you need to remove only some packages, there are some options:
+
+###### Pattern
+You could apply a pattern to filter the reference name.
+
+For example, removing all Boost packages from bincrafters:
+
+    bincrafters-remove-outdated --pattern=Boost/* bincrafters
+
+###### Package List
+You could use a file to list all packages to be removed.
+
+For example, remove Boost, Poco and OpenSSL using a text file:
+
+```
+boost/1.67.0@conan/stable
+Poco/1.9.0@pocoproject/stable
+OpenSSL/1.0.2n@conan/stable
+```
+
+    bincrafters-remove-outdated --package-list-file=package_list.txt bincrafters
 
 ##### Testing and Development
 To install extra packages required to test

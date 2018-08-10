@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pytest
+import tempfile
 from conans.client import conan_api
 from conans.model.ref import ConanFileReference
 from bincrafters_remove_outdated import bincrafters_remove_outdated
@@ -47,6 +48,21 @@ class MyPkg(ConanFile):
     return test_client
 
 
+def create_temp_file(package_list):
+    for package in package_list:
+        with tempfile.NamedTemporaryFile(delete=False) as file:
+            file.write(package.encode())
+            return file.name
+
+
+def create_valid_package_file():
+    return create_temp_file(['Hello/0.1.0@conanuser/testing'])
+
+
+def create_invalid_package_file():
+    return create_temp_file(['Hello/0.1.0@conanuser/testing', 'Boost/*', '1234', 'foobar'])
+
+
 def has_outdated_packages(packages):
     assert not packages['error']
     results = packages['results']
@@ -66,6 +82,26 @@ def has_outdated_packages(packages):
 def get_package_list(conan_instance):
     reference = ConanFileReference.loads("Hello/0.1.0@conanuser/testing")
     return conan_instance.search_packages(reference, remote='testing')
+
+
+def test_valid_package_list(client):
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    command = bincrafters_remove_outdated.Command()
+    package_list_file = create_valid_package_file()
+    command.set_conan_instance(conan_instance)
+    command.run(['testing', '--yes', '--package-list-file={}'.format(package_list_file)])
+    packages = get_package_list(conan_instance)
+    assert not has_outdated_packages(packages)
+
+
+def test_invalid_package_list(client):
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    command = bincrafters_remove_outdated.Command()
+    package_list_file = create_invalid_package_file()
+    command.set_conan_instance(conan_instance)
+    command.run(['testing', '--yes', '--package-list-file={}'.format(package_list_file)])
+    packages = get_package_list(conan_instance)
+    assert not has_outdated_packages(packages)
 
 
 def test_remove_outdate_package(client):
