@@ -17,6 +17,8 @@ if [[ "${TRAVIS_EVENT_TYPE}" != "cron" ]]; then
     mv .coverage ..
     popd
 
+    python setup.py install
+    bincrafters-remove-outdated --version
 else
 
     python setup.py install
