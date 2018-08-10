@@ -1,6 +1,7 @@
 [![Build Status: Linux and Macos](https://travis-ci.org/bincrafters/bincrafters-remove-outdated.svg?branch=master)](https://travis-ci.org/bincrafters/bincrafters-remove-outdated)
 [![Build status: Windows](https://ci.appveyor.com/api/projects/status/github/bincrafters/bincrafters-remove-outdated?svg=true)](https://ci.appveyor.com/project/bincrafters/bincrafters-remove-outdated)
 [![codecov](https://codecov.io/gh/bincrafters/bincrafters-remove-outdated/branch/master/graph/badge.svg)](https://codecov.io/gh/bincrafters/bincrafters-remove-outdated)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/314bf09e0f214735849519143025e6c4)](https://www.codacy.com/app/uilianries/bincrafters-remove-outdated?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bincrafters/bincrafters-remove-outdated&amp;utm_campaign=Badge_Grade)
 [![Pypi Download](https://img.shields.io/badge/download-pypi-blue.svg)](https://pypi.python.org/pypi/bincrafters-remove-outdated)
 
 # Conan Remove Outdated
