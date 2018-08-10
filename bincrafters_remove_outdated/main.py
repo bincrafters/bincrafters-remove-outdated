@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from bincrafters_remove_outdated import bincrafters_remove_outdated
 import sys
+if sys.version_info.major == 3:
+    from bincrafters_remove_outdated import bincrafters_remove_outdated
+else:
+    import bincrafters_remove_outdated
 
 
 def run():

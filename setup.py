@@ -96,22 +96,21 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=get_requires(os.path.join('bincrafters_remove_outdated', 'requirements.txt')),
+    install_requires=get_requires('requirements.txt'),
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
     # for example:
     # $ pip install -e .[dev,test]
     extras_require={
-        'test': get_requires(os.path.join('bincrafters_remove_outdated', 'requirements_test.txt'))
+        'test': get_requires('requirements_test.txt')
     },
 
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
     package_data={
-        '': ['*.md'],
-        'bincrafters_remove_outdated' : ['*.txt'],
+        '': ['*.md', '*.txt'],
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
@@ -125,7 +124,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'bincrafters-remove-outdated=bincrafters_remove_outdated.main:run',
+            'bincrafters-remove-outdated = bincrafters_remove_outdated.main:run',
         ],
     },
 )
