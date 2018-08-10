@@ -22,4 +22,3 @@ test_script:
 - pytest -v --cov=bincrafters_remove_outdated
 - cd ..
 - python setup.py install
-- bincrafters_remove_outdated --version

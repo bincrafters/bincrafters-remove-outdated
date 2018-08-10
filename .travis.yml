@@ -11,7 +11,6 @@ matrix:
     language: python
     python: '3.6'
     if: type != cron
-    env: DEPLOY="true"
   - os: osx
     language: generic
     osx_image: xcode9
