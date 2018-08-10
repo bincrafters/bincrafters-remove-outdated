@@ -10,7 +10,7 @@ from conans.model.ref import ConanFileReference
 
 __author__  = "Uilian Ries"
 __license__ = "MIT"
-__version__ = '0.3.1'
+__version__ = '0.4.0'
 
 
 class Command(object):
