@@ -81,11 +81,11 @@ def has_outdated_packages(packages):
 
 def get_package_list(conan_instance):
     reference = ConanFileReference.loads("Hello/0.1.0@conanuser/testing")
-    return conan_instance.search_packages(reference, remote='testing')
+    return conan_instance.search_packages(reference, remote_name='testing')
 
 
 def test_valid_package_list(client):
-    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager)
     command = bincrafters_remove_outdated.Command()
     package_list_file = create_valid_package_file()
     command.set_conan_instance(conan_instance)
@@ -95,7 +95,7 @@ def test_valid_package_list(client):
 
 
 def test_invalid_package_list(client):
-    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager)
     command = bincrafters_remove_outdated.Command()
     package_list_file = create_invalid_package_file()
     command.set_conan_instance(conan_instance)
@@ -105,7 +105,7 @@ def test_invalid_package_list(client):
 
 
 def test_remove_outdate_package(client):
-    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager)
     command = bincrafters_remove_outdated.Command()
     packages = get_package_list(conan_instance)
     assert has_outdated_packages(packages)
@@ -116,7 +116,7 @@ def test_remove_outdate_package(client):
 
 
 def test_remove_outdate_package_with_pattern(client):
-    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager)
     command = bincrafters_remove_outdated.Command()
     command.set_conan_instance(conan_instance)
     command.run(['testing', '--pattern=Hello/*', '--yes'])
@@ -125,7 +125,7 @@ def test_remove_outdate_package_with_pattern(client):
 
 
 def test_remove_outdate_package_with_wrong_pattern(client):
-    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager)
     command = bincrafters_remove_outdated.Command()
     command.set_conan_instance(conan_instance)
     try:
@@ -138,7 +138,7 @@ def test_remove_outdate_package_with_wrong_pattern(client):
 
 
 def test_remove_outdate_package_with_ignore(client):
-    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager)
     command = bincrafters_remove_outdated.Command()
     command.set_conan_instance(conan_instance)
     command.run(['testing', '--yes', '--ignore'])
@@ -147,7 +147,7 @@ def test_remove_outdate_package_with_ignore(client):
 
 
 def test_dry_run_outdate_package(client):
-    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager, None, None)
+    conan_instance = conan_api.Conan(client.client_cache, client.user_io, client.runner, client.remote_manager)
     command = bincrafters_remove_outdated.Command()
     command.set_conan_instance(conan_instance)
     command.run(['testing', '--dry-run'])
