@@ -10,7 +10,7 @@ from conans.model.ref import ConanFileReference
 
 __author__  = "Uilian Ries"
 __license__ = "MIT"
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 
 
 class Command(object):
@@ -84,7 +84,7 @@ class Command(object):
                     print(termcolor.colored("{}: Found outdated packages. Removing ...".format(recipe), "blue"))
                     try:
                         if not self._arguments.dry_run:
-                            self._conan_instance.remove(recipe, remote=remote, outdated=True, force=skip_input)
+                            self._conan_instance.remove(recipe, remote_name=remote, outdated=True, force=skip_input)
                     except Exception as error:
                         self._notify_error(error)
 
@@ -95,7 +95,7 @@ class Command(object):
         :param pattern: Conan reference pattern
         :return: list of recipes
         """
-        result = self._conan_instance.search_recipes(pattern, remote=remote)
+        result = self._conan_instance.search_recipes(pattern, remote_name=remote)
         if result.get('error'):
             self._notify_error("Could not retrieve recipes from remote: {}".format(result.get('results')))
 
@@ -119,7 +119,7 @@ class Command(object):
         :return: list of packages. Including outdated
         """
         reference = ConanFileReference.loads(recipe)
-        result = self._conan_instance.search_packages(reference, remote=remote, outdated=True)
+        result = self._conan_instance.search_packages(reference, remote_name=remote, outdated=True)
         if result.get('error'):
             self._notify_error("Could not obtain remote package info")
         packages = result['results'][0]['items'][0]['packages']
