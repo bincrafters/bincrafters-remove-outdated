@@ -8,7 +8,7 @@ install:
   - set PATH=%PYTHON_HOME%;%PYTHON_HOME%/Scripts/;%PATH%
   - pip.exe install -e .[test]
 
-test_script:
+build_script:
   - cd tests
   - pytest -v --cov=bincrafters_remove_outdated
   - cd ..
