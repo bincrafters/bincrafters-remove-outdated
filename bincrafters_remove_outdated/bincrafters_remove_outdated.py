@@ -80,11 +80,14 @@ class Command(object):
             recipes = self._get_recipes_from_remote(remote, reference)
             for recipe in recipes:
                 print(termcolor.colored("{}: Searching for outdated packages".format(recipe), "blue"))
-                if self._are_there_outdated_packages(remote, recipe):
-                    print(termcolor.colored("{}: Found outdated packages. Removing ...".format(recipe), "blue"))
+                packages = self._are_there_outdated_packages(remote, recipe)
+                if packages:
                     try:
                         if not self._arguments.dry_run:
-                            self._conan_instance.remove(recipe, remote_name=remote, outdated=True, force=skip_input)
+                            for package in packages:
+                                if package.get('outdated'):
+                                    print(termcolor.colored("{}: Found outdated packages. Removing {} ...".format(recipe, package.get('id')), "blue"))
+                                    self._conan_instance.remove(recipe, remote_name=remote, outdated=True, force=skip_input, packages=[package.get('id')])
                     except Exception as error:
                         self._notify_error(error)
 
