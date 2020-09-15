@@ -4,9 +4,9 @@ set -e
 set -x
 
 if [[ "$(uname -s)" == 'Darwin' ]]; then
-    if which pyenv > /dev/null; then
-        eval "$(pyenv init -)"
-    fi
+    export PATH="$HOME/.pyenv/bin:$PATH";
+    eval "$(pyenv init -)";
+    eval "$(pyenv virtualenv-init -)";
     pyenv activate conan
 fi
 

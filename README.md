@@ -11,8 +11,9 @@
 ![logo](logo.png)
 
 #### Requirements
-  * Python 2.7 or 3
+  * Python 3 
   * the [Conan](https://conan.io) client
+
 
 #### INSTALL
 To install by pip is just one step
@@ -74,12 +75,12 @@ For example, removing all Boost packages from bincrafters:
 ###### Package List
 You could use a file to list all packages to be removed.
 
-For example, remove Boost, Poco and OpenSSL using a text file:
+For example, remove outdated builds from Boost, Poco and OpenSSL using a text file:
 
 ```
-boost/1.67.0@conan/stable
-Poco/1.9.0@pocoproject/stable
-OpenSSL/1.0.2n@conan/stable
+boost/1.71.0@conan/stable
+poco/1.9.1@pocoproject/stable
+openssl/1.0.2s@conan/stable
 ```
 
     bincrafters-remove-outdated --package-list-file=package_list.txt bincrafters
@@ -110,7 +111,7 @@ There are two ways to upload this project.
 ##### Travis CI
 After to create a new tag, the package will be uploaded automatically to PyPi.  
 Both username and password (encrypted) are in travis file.  
-Only one job (Python 3.6) will upload, the others will be skipped.
+Only one job will upload, the others will be skipped.
 
 
 ##### Command line

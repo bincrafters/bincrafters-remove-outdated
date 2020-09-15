@@ -1,24 +1,15 @@
-build: false
-
-
 environment:
-    PYTHON_ARCH: "32"
+  PYTHON_HOME: "C:\\Python37"
 
-    matrix:
-        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-          PYTHON: "C:\\Python27"
-          PYTHON_VERSION: "2.7.8"
-        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-          PYTHON: "C:\\Python37"
-          PYTHON_VERSION: "3.7.0"
-
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
 
 install:
-  - set PATH=%PATH%;%PYTHON%/Scripts/
+  - set PATH=%PYTHON_HOME%;%PYTHON_HOME%/Scripts/;%PATH%
   - pip.exe install -e .[test]
 
-test_script:
-- cd tests
-- pytest -v --cov=bincrafters_remove_outdated
-- cd ..
-- python setup.py install
+build_script:
+  - cd tests
+  - pytest -v --cov=bincrafters_remove_outdated
+  - cd ..
+  - python setup.py install

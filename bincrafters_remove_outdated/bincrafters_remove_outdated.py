@@ -119,7 +119,7 @@ class Command(object):
         :return: list of packages. Including outdated
         """
         reference = ConanFileReference.loads(recipe)
-        result = self._conan_instance.search_packages(reference, remote_name=remote, outdated=True)
+        result = self._conan_instance.search_packages(str(reference), remote_name=remote, outdated=True)
         if result.get('error'):
             self._notify_error("Could not obtain remote package info")
         packages = result['results'][0]['items'][0]['packages']
