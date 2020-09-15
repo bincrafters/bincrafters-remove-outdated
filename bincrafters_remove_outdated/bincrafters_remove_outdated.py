@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import argparse
@@ -8,9 +7,9 @@ import termcolor
 from conans.client import conan_api
 from conans.model.ref import ConanFileReference
 
-__author__  = "Uilian Ries"
+__author__  = "Bincrafters"
 __license__ = "MIT"
-__version__ = '0.4.2'
+__version__ = '0.5.0'
 
 
 class Command(object):
