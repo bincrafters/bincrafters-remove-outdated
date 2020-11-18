@@ -22,7 +22,7 @@ install:
 - ".travis/install.sh"
 
 script:
-- travis_wait 60 ".travis/run.sh"
+- ".travis/run.sh"
 
 after_success:
 - codecov
