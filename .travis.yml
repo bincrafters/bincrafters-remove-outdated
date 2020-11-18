@@ -13,7 +13,6 @@ matrix:
     if: type != cron
   - os: linux
     sudo: false
-    env: CONAN_LOGGING_LEVEL=10
     language: python
     python: '3.6'
     if: type = cron

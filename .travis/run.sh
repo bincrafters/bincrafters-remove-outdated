@@ -26,10 +26,12 @@ else
     conan user -r bincrafters -p ${PASSWORD} ${LOGIN_USERNAME}
     for x in {a..z}
     do
-        bincrafters-remove-outdated bincrafters --ignore --yes --pattern "${x}*"
+        bincrafters-remove-outdated bincrafters --ignore --yes --pattern "${x}*" &
     done
+    wait
     for x in {0..9}
     do
-        bincrafters-remove-outdated bincrafters --ignore --yes --pattern "${x}*"
+        bincrafters-remove-outdated bincrafters --ignore --yes --pattern "${x}*" &
     done
+    wait
 fi
