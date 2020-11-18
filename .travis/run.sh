@@ -24,5 +24,12 @@ else
     python setup.py install
     conan remote add bincrafters ${REMOTE}
     conan user -r bincrafters -p ${PASSWORD} ${LOGIN_USERNAME}
-    bincrafters-remove-outdated bincrafters --ignore --yes
+    for x in {a..z}
+    do
+        bincrafters-remove-outdated bincrafters --ignore --yes --pattern ${x}*
+    done
+    for x in {0..9}
+    do
+        bincrafters-remove-outdated bincrafters --ignore --yes --pattern ${x}*
+    done
 fi
