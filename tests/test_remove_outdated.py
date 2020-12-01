@@ -3,14 +3,13 @@
 
 import pytest
 import tempfile
-from conans.client import conan_api
 from conans.model.ref import ConanFileReference
 from bincrafters_remove_outdated import bincrafters_remove_outdated
 
 
 @pytest.fixture
 def server():
-    from conans.test.utils.tools import TestServer
+    from tests.utils.tools import TestServer
     test_server = TestServer(read_permissions=[("*/*@*/*", "*")],
                                   write_permissions=[("*/*@foobar/stable", "conanuser")],
                                   users={"conanuser": "conanpass"})
@@ -19,7 +18,7 @@ def server():
 
 @pytest.fixture()
 def client(server):
-    from conans.test.utils.tools import TestClient
+    from tests.utils.tools import TestClient
     conanfile = """from conans import ConanFile
 class MyPkg(ConanFile):
     name = "Hello"
