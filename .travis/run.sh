@@ -12,10 +12,7 @@ fi
 
 if [[ "${TRAVIS_EVENT_TYPE}" != "cron" ]]; then
     python setup.py sdist
-    pushd tests
-    pytest -v -s --cov=bincrafters_remove_outdated.bincrafters_remove_outdated
-    mv .coverage ..
-    popd
+    tox -v
 
     python setup.py install
     bincrafters-remove-outdated --version

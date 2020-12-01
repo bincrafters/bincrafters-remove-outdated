@@ -126,4 +126,5 @@ setup(
             'bincrafters-remove-outdated = bincrafters_remove_outdated.main:run',
         ],
     },
+    long_description_content_type='text/markdown',
 )

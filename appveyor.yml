@@ -3,13 +3,14 @@ environment:
 
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      TOXENV: py37-conan-latest
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      TOXENV: py37-conan-dev
 
 install:
   - set PATH=%PYTHON_HOME%;%PYTHON_HOME%/Scripts/;%PATH%
   - pip.exe install -e .[test]
 
 build_script:
-  - cd tests
-  - pytest -v --cov=bincrafters_remove_outdated
-  - cd ..
+  - tox
   - python setup.py install

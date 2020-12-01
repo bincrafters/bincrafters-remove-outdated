@@ -1,21 +1,44 @@
+sudo: false
+language: python
+dist: trusty
+
 matrix:
-  fast_finish: true
   include:
   - os: linux
-    sudo: false
     language: python
-    python: '3.6'
+    python: '3.7'
     if: type != cron
-    env: DEPLOY="true"
+    env: TOXENV=py37-conan-dev
+  - os: linux
+    language: python
+    python: '3.7'
+    if: type != cron
+    env:
+      - DEPLOY="true"
+      - TOXENV=py37-conan-latest
+
   - os: osx
     language: generic
     osx_image: xcode9
     if: type != cron
+    env: TOXENV=py37-conan-dev
+  - os: osx
+    language: generic
+    osx_image: xcode9
+    if: type != cron
+    env: TOXENV=py37-conan-latest
+
   - os: linux
-    sudo: false
     env: CONAN_LOGGING_LEVEL=10
     language: python
-    python: '3.6'
+    python: '3.7'
+    env: TOXENV=py37-conan-dev
+    if: type = cron
+  - os: linux
+    env: CONAN_LOGGING_LEVEL=10
+    language: python
+    python: '3.7'
+    env: TOXENV=py37-conan-latest
     if: type = cron
 
 install:
