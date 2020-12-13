@@ -1,8 +1,32 @@
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 * * 1"
+
 
 name: "bincrafters-remove-outdated"
 
 jobs:
+  cronjob:
+    name: "Delete outdated packages for Bincrafters"
+    runs-on: ubuntu-20.04
+    if: github.event_name == 'schedule'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: "3.8"
+    - name: "Update CCI fork with upstream changes"
+      env:
+        CONAN_LOGGING_LEVEL: 10
+        CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
+        CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+      run: |
+        python setup.py install
+        conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+        conan user -r bincrafters -p ${CONAN_PASSWORD} ${CONAN_LOGIN_USERNAME}
+        bincrafters-remove-outdated bincrafters --ignore --yes
   bincrafters-remove-outdated-test:
     name: Test Tools on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -19,7 +43,29 @@ jobs:
     - name: "Build & Test"
       run: |
         pip install -e .[test]
+        python setup.py sdist
         cd tests
         pytest -v -s --cov=bincrafters_remove_outdated
-        cd .. 
+        mv .coverage ..
+        cd ..
+        codecov 
         python setup.py install
+        bincrafters-remove-outdated --version
+  bincrafters-remove-outdated-deploy:
+    name: Deploy Remove Outdated to PyPi
+    runs-on: ubuntu-20.04
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+    needs: bincrafters-remove-outdated-test
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: "3.8"
+    - name: Build
+      run: |
+        python setup.py sdist
+    - name: Publish package
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_TOKEN }}
