@@ -7,10 +7,6 @@ matrix:
     python: '3.6'
     if: type != cron
     env: DEPLOY="true"
-  - os: osx
-    language: generic
-    osx_image: xcode9
-    if: type != cron
   - os: linux
     sudo: false
     env: CONAN_LOGGING_LEVEL=10

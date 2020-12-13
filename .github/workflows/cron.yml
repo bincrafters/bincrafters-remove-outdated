@@ -1,0 +1,25 @@
+on: [push, pull_request]
+
+name: "bincrafters-remove-outdated"
+
+jobs:
+  bincrafters-remove-outdated-test:
+    name: Test Tools on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    if: github.event_name == 'push'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-20.04", "windows-2019", "macos-11.0"]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: "3.8"
+    - name: "Build & Test"
+      run: |
+        pip install -e .[test]
+        cd tests
+        pytest -v -s --cov=bincrafters_remove_outdated
+        cd .. 
+        python setup.py install
