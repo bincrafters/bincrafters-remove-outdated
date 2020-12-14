@@ -53,3 +53,4 @@ venv
 conan_clang_update.egg-info/
 bincrafters_remove_outdated.egg-info/
 htmlcov/
+.tox/
