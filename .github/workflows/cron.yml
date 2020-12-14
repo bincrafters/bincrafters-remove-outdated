@@ -22,6 +22,7 @@ jobs:
         CONAN_LOGGING_LEVEL: 10
         CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
         CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+        CONAN_REQUEST_TIMEOUT: 3600
       run: |
         python setup.py install
         conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
