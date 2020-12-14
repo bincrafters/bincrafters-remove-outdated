@@ -2,14 +2,14 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: "0 0 * * 1"
+    - cron: "0 0 * * *"
 
 
 name: "bincrafters-remove-outdated"
 
 jobs:
   cronjob:
-    name: "Delete outdated packages for Bincrafters"
+    name: "Delete Outdated Packages For Bincrafters"
     runs-on: ubuntu-20.04
     if: github.event_name == 'schedule'
     steps:
@@ -17,7 +17,7 @@ jobs:
     - uses: actions/setup-python@v1
       with:
         python-version: "3.8"
-    - name: "Update CCI fork with upstream changes"
+    - name: "Delete Outdated Packages"
       env:
         CONAN_LOGGING_LEVEL: 10
         CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
