@@ -56,6 +56,8 @@ setup(
     # https://packaging.python.org/specifications/core-metadata/#description-optional
     long_description=long_description, # Optional
 
+    long_description_content_type='text/markdown',
+
     description='Conan script to remove all outdate packages from remote',
 
     # The project's main homepage.
